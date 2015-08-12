@@ -1,11 +1,12 @@
 #include<iostream>
+#include<cstdlib>
 using namespace std;
 
 //a timetable class to hold a timetable
 
 class TimeTables
 {
-    protected :
+    public :
     int classTimeTable[6][7];
 
 };
@@ -17,8 +18,11 @@ class Teachers : public TimeTables
 
     //teacherIdentity is a unique identifier
     //teacherName Holds the name of the teacher
+    //teacherIdentifierSetter is used to assign a unique integer to teacherIdentity
+    static int teacherIdentifierSetter;
 
     protected :
+
     int teacherIdentity;
     char teacherName[30];
 
@@ -32,8 +36,13 @@ class ClassRooms : public TimeTables
 
     //classIdentity is a unique identifier
     //classRoomName holds the name of the classRoom
+    //classIdentifierSetter is used to assign a unique integer to classIdentity
+
+    static int classIdentifierSetter;
+
     protected :
-    static int classIdentity;
+
+    int classIdentity;
     char classRoomName[10];
 
 };
@@ -47,35 +56,52 @@ class Subjects : public Teachers,public ClassRooms
     //subjectIdentity is a unique identifier for a subject
     //duration is the length of each class
     //subjectName holds the name of the subject
+    //subjectIdentifierSetter is used to assign a unique integer to subjectIdentity
+
+    static int subjectIdentifierSetter;
 
     protected :
-    static int subjectIdentity;
-    int priority,duration;
+
+    int priority,duration,subjectIdentity;
     char subjectName[50];
+    int relativeClassRoom;
 
-    void ClassRoomTimeTableAllocator()
+    //a method to allocate the created subject to a class
+
+    void ClassRoomTimeTableAllocator(ClassRooms classRoom)
     {
-
-        int hoursPerDay,daysPerWeek;
-
-        while(priority!=0)
+        if(classRoom.classIdentity==relativeClassRoom)
         {
-            for(daysPerWeek=0;daysPerWeek<6;daysPerWeek++)
+
+            int hoursPerDay,daysPerWeek;
+
+            while(priority!=0)
             {
 
-                for(hoursPerDay=0;hoursPerDay<7;hoursPerDay++)
+                for(daysPerWeek=0;daysPerWeek<6;daysPerWeek++)
                 {
-                        if(classTimeTable[daysPerWeek][hoursPerDay]==NULL)
-                        {
-                            hoursPerDay+=3;
-                            classTimeTable[daysPerWeek][hoursPerDay] = subjectIdentity;
-                        }
-                        else
-                        {
-                            hoursPerDay++;
-                        }
+
+                    for(hoursPerDay=0;hoursPerDay<7;hoursPerDay++)
+                    {
+
+                            if(classRoom.classTimeTable[daysPerWeek][hoursPerDay]==NULL)
+                            {
+                                hoursPerDay+= rand()%4 ;
+                            }
+                            else
+                            {
+                                while(classRoom.classTimeTable[daysPerWeek][hoursPerDay]!=NULL)
+                                    hoursPerDay++;
+                            }
+                            classRoom.classTimeTable[daysPerWeek][hoursPerDay] = subjectIdentity;
+
+                    }
                 }
             }
+        }
+        else
+        {
+            cout<<"Irrelevant class room";
         }
     }
 };
