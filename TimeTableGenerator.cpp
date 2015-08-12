@@ -106,6 +106,8 @@ class Subjects : public Teachers,public ClassRooms
     }
 };
 
+//temporary main function
+
 int main()
 {
 
