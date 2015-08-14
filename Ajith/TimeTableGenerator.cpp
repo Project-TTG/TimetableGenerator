@@ -57,6 +57,8 @@ class Subjects : public Teachers,public ClassRooms
     //duration is the length of each class
     //subjectName holds the name of the subject
     //subjectIdentifierSetter is used to assign a unique integer to subjectIdentity
+    //relativeClassRoom holds the indexes of the classes for which this subject is available
+    //classRoomLoopVariable is a loop Variable use to access the relativeClassRooms
 
     static int subjectIdentifierSetter;
 
@@ -64,44 +66,55 @@ class Subjects : public Teachers,public ClassRooms
 
     int priority,duration,subjectIdentity;
     char subjectName[50];
-    int relativeClassRoom;
+    int relativeClassRooms[10],classRoomLoopVariable;
 
     //a method to allocate the created subject to a class
 
     void ClassRoomTimeTableAllocator(ClassRooms classRoom)
     {
-        if(classIdentity==relativeClassRoom)
+        //traversing trough the various Relevant Class rooms
+        for(classRoomLoopVariable=0;relativeClassRooms[classRoomLoopVariable]!='\0';classRoomLoopVariable++)
         {
+            //a safety measure to ensure that irrelevant classes don't get mixed up
 
-            int hoursPerDay,daysPerWeek;
-
-            while(priority!=0)
+            if(classIdentity==relativeClassRooms[classRoomLoopVariable])
             {
 
-                for(daysPerWeek=0;daysPerWeek<6;daysPerWeek++)
-                {
+                int hoursPerDay,daysPerWeek;
 
-                    for(hoursPerDay=0;hoursPerDay<7;hoursPerDay++)
+                //to ensure that all classes have been filled with this subject
+
+                while(priority!=0)
+                {
+                    //traversing through the array
+
+                    for(daysPerWeek=0;daysPerWeek<6;daysPerWeek++)
                     {
 
-                            if(classRoom.classTimeTable[daysPerWeek][hoursPerDay]==0)
-                            {
-                                hoursPerDay+= rand()%4 ;
-                            }
-                            else
-                            {
-                                while(classRoom.classTimeTable[daysPerWeek][hoursPerDay]!=0)
-                                    hoursPerDay++;
-                            }
-                            classRoom.classTimeTable[daysPerWeek][hoursPerDay] = subjectIdentity;
+                        for(hoursPerDay=0;hoursPerDay<7;hoursPerDay++)
+                        {
+                                //checking if there are free periods
 
+                                if(classRoom.classTimeTable[daysPerWeek][hoursPerDay]==0)
+                                {
+                                    hoursPerDay+= rand()%7 ;    //picks a random hour from a day
+                                }
+                                else
+                                {
+                                    while(classRoom.classTimeTable[daysPerWeek][hoursPerDay]!=0)
+                                        hoursPerDay++;  //in case the hour is not free
+                                }
+                                if(hoursPerDay<7)   //in case hoursPerDay ends up greater than 7 from the previous stateent
+                                    classRoom.classTimeTable[daysPerWeek][hoursPerDay] = subjectIdentity;
+
+                        }
                     }
                 }
             }
-        }
-        else
-        {
-            cout<<"Irrelevant class room";
+            else
+            {
+                cout<<"Irrelevant class room";  //an error message to see what went wrong
+            }
         }
     }
 };
