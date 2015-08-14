@@ -7,7 +7,7 @@ using namespace std;
 class TimeTables
 {
     public :
-    int classTimeTable[6][7];
+    int classTimeTable[6][7] ={{0}};
 
 };
 
@@ -70,7 +70,7 @@ class Subjects : public Teachers,public ClassRooms
 
     void ClassRoomTimeTableAllocator(ClassRooms classRoom)
     {
-        if(classRoom.classIdentity==relativeClassRoom)
+        if(classIdentity==relativeClassRoom)
         {
 
             int hoursPerDay,daysPerWeek;
@@ -84,13 +84,13 @@ class Subjects : public Teachers,public ClassRooms
                     for(hoursPerDay=0;hoursPerDay<7;hoursPerDay++)
                     {
 
-                            if(classRoom.classTimeTable[daysPerWeek][hoursPerDay]==NULL)
+                            if(classRoom.classTimeTable[daysPerWeek][hoursPerDay]==0)
                             {
                                 hoursPerDay+= rand()%4 ;
                             }
                             else
                             {
-                                while(classRoom.classTimeTable[daysPerWeek][hoursPerDay]!=NULL)
+                                while(classRoom.classTimeTable[daysPerWeek][hoursPerDay]!=0)
                                     hoursPerDay++;
                             }
                             classRoom.classTimeTable[daysPerWeek][hoursPerDay] = subjectIdentity;
