@@ -12,18 +12,20 @@ class TimeTables
 };
 
 //inherited class Teachers for teacher timetables
+// Teacher class for the purpose of "generating Teacher Schedules"
 
 class Teachers : public TimeTables
 {
 
-    //teacherIdentity is a unique identifier
+    //teacherIdentity is a unique identifier "to identify the teacher"
     //teacherName Holds the name of the teacher
     //teacherIdentifierSetter is used to assign a unique integer to teacherIdentity
-    static int teacherIdentifierSetter;
+    
+    static int teacherIdentifierSetter;            
 
     protected :
 
-    int teacherIdentity;
+    // int teacherIdentity;
     char teacherName[30];
 
 };
@@ -42,7 +44,7 @@ class ClassRooms : public TimeTables
 
     protected :
 
-    int classIdentity;
+    // int classIdentity;
     char classRoomName[10];
 
 };
@@ -64,7 +66,8 @@ class Subjects : public Teachers,public ClassRooms
 
     protected :
 
-    int priority,duration,subjectIdentity;
+    int priority,duration;
+    // int subjectIdentity;
     char subjectName[50];
     int relativeClassRooms[10],classRoomLoopVariable;
 
