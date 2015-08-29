@@ -86,7 +86,7 @@ class Subjects : public Teachers,public ClassRooms
 
                             if(classRoom.classTimeTable[daysPerWeek][hoursPerDay]==NULL)
                             {
-                                hoursPerDay+= rand()%4 ;
+                                hoursPerDay+= rand()%7 ;
                             }
                             else
                             {
